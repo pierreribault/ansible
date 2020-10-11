@@ -1,0 +1,25 @@
+name: Build And Push ofelia
+on:
+  push:
+
+jobs:
+  ofelia:
+    name: Publish ofelia on dockerhub
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Run hadolint on Dockerfile
+        if: github.event_name == 'push'
+        run: "docker run --rm -i hadolint/hadolint hadolint --ignore DL3008 --ignore DL3007 - < Dockerfile"
+ 
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.PACKAGE_TOKEN }}
+          push: true
+          registry: ghcr.io
+          repository: pierreribault/ansible
+          tags: latest
