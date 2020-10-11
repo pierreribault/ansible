@@ -1,10 +1,10 @@
-name: Build And Push ofelia
+name: Build And Push Ansible
 on:
   push:
 
 jobs:
   ofelia:
-    name: Publish ofelia on dockerhub
+    name: Publish Ansible on Github Registry
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
